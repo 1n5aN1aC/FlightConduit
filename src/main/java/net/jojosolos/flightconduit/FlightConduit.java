@@ -2,7 +2,12 @@ package net.jojosolos.flightconduit;
 
 import com.mojang.logging.LogUtils;
 import net.jojosolos.flightconduit.block.ModBlocks;
+import net.jojosolos.flightconduit.block.entity.ModBlockEntities;
 import net.jojosolos.flightconduit.effect.ModEffects;
+import net.jojosolos.flightconduit.item.ModCreativeModeTabs;
+import net.jojosolos.flightconduit.item.ModItems;
+import net.minecraft.world.item.CreativeModeTabs;
+import net.minecraft.world.item.Items;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
@@ -25,8 +30,14 @@ public class FlightConduit
     public FlightConduit() {
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 
+        ModCreativeModeTabs.register(modEventBus);
+
+        ModItems.register(modEventBus);
         ModBlocks.register(modEventBus);
+
         ModEffects.register(modEventBus);
+
+        ModBlockEntities.register(modEventBus);
 
         modEventBus.addListener(this::commonSetup);
 
@@ -38,6 +49,9 @@ public class FlightConduit
     }
 
     private void addCreative(BuildCreativeModeTabContentsEvent event) {
+        if(event.getTabKey() == CreativeModeTabs.INGREDIENTS) {
+            event.accept(Items.DIAMOND);
+        }
     }
 
     @SubscribeEvent
