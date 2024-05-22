@@ -36,7 +36,7 @@ public class FlightConduitBlockEntity extends BlockEntity {
     private static final int MIN_ACTIVE_SIZE = 16;
     private static final int MIN_KILL_SIZE = 42;
     private static final int KILL_RANGE = 8;
-    private static final Block[] VALID_BLOCKS = new Block[]{Blocks.DIAMOND_BLOCK};
+    private static final Block[] VALID_BLOCKS = new Block[] {Blocks.DIAMOND_BLOCK};
     public int tickCount;
     private float activeRotation;
     private boolean isActive;
@@ -54,6 +54,7 @@ public class FlightConduitBlockEntity extends BlockEntity {
     }
 
 
+    @Override
     public void load(CompoundTag pTag) {
         super.load(pTag);
         if (pTag.hasUUID("Target")) {
@@ -61,9 +62,9 @@ public class FlightConduitBlockEntity extends BlockEntity {
         } else {
             this.destroyTargetUUID = null;
         }
-
     }
 
+    @Override
     protected void saveAdditional(CompoundTag pTag) {
         super.saveAdditional(pTag);
         if (this.destroyTarget != null) {
@@ -72,10 +73,12 @@ public class FlightConduitBlockEntity extends BlockEntity {
 
     }
 
+    @Override
     public ClientboundBlockEntityDataPacket getUpdatePacket() {
         return ClientboundBlockEntityDataPacket.create(this);
     }
 
+    @Override
     public CompoundTag getUpdateTag() {
         return this.saveWithoutMetadata();
     }
@@ -135,17 +138,6 @@ public class FlightConduitBlockEntity extends BlockEntity {
 
     private static boolean updateShape(Level pLevel, BlockPos pPos, List<BlockPos> pPositions) {
         pPositions.clear();
-
-        for(int i = -1; i <= 1; ++i) {
-            for(int j = -1; j <= 1; ++j) {
-                for(int k = -1; k <= 1; ++k) {
-                    BlockPos blockpos = pPos.offset(i, j, k);
-                    if (!pLevel.isWaterAt(blockpos)) {
-                        return false;
-                    }
-                }
-            }
-        }
 
         for(int j1 = -2; j1 <= 2; ++j1) {
             for(int k1 = -2; k1 <= 2; ++k1) {
