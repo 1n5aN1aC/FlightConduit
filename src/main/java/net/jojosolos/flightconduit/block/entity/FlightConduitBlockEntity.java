@@ -17,6 +17,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.monster.Enemy;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -29,14 +30,6 @@ import java.util.List;
 import java.util.UUID;
 
 public class FlightConduitBlockEntity extends BlockEntity {
-
-    private static final int BLOCK_REFRESH_RATE = 2;
-    private static final int EFFECT_DURATION = 13;
-    private static final float ROTATION_SPEED = -0.0375F;
-    private static final int MIN_ACTIVE_SIZE = 16;
-    private static final int MIN_KILL_SIZE = 42;
-    private static final int KILL_RANGE = 8;
-    private static final Block[] VALID_BLOCKS = new Block[] {Blocks.DIAMOND_BLOCK};
     public int tickCount;
     private float activeRotation;
     private boolean isActive;
@@ -108,7 +101,7 @@ public class FlightConduitBlockEntity extends BlockEntity {
             boolean flag = updateShape(pLevel, pPos, list);
             if (flag != pBlockEntity.isActive) {
                 SoundEvent soundevent = flag ? SoundEvents.CONDUIT_ACTIVATE : SoundEvents.CONDUIT_DEACTIVATE;
-                pLevel.playSound((Player)null, pPos, soundevent, SoundSource.BLOCKS, 1.0F, 1.0F);
+                pLevel.playSound((Player)null, pPos, soundevent, SoundSource.BLOCKS, 0.5F, 1.0F);
             }
 
             pBlockEntity.isActive = flag;
@@ -121,12 +114,12 @@ public class FlightConduitBlockEntity extends BlockEntity {
 
         if (pBlockEntity.isActive()) {
             if (i % 80L == 0L) {
-                pLevel.playSound((Player)null, pPos, SoundEvents.CONDUIT_AMBIENT, SoundSource.BLOCKS, 1.0F, 1.0F);
+                pLevel.playSound((Player)null, pPos, SoundEvents.CONDUIT_AMBIENT, SoundSource.BLOCKS, 0.5F, 1.0F);
             }
 
             if (i > pBlockEntity.nextAmbientSoundActivation) {
                 pBlockEntity.nextAmbientSoundActivation = i + 60L + (long)pLevel.getRandom().nextInt(40);
-                pLevel.playSound((Player)null, pPos, SoundEvents.CONDUIT_AMBIENT_SHORT, SoundSource.BLOCKS, 1.0F, 1.0F);
+                pLevel.playSound((Player)null, pPos, SoundEvents.CONDUIT_AMBIENT_SHORT, SoundSource.BLOCKS, 0.5F, 1.0F);
             }
         }
 
@@ -149,20 +142,27 @@ public class FlightConduitBlockEntity extends BlockEntity {
                         BlockPos blockpos1 = pPos.offset(j1, k1, l1);
                         BlockState blockstate = pLevel.getBlockState(blockpos1);
 
-                        if (blockstate.isConduitFrame(pLevel, blockpos1, pPos)) {
+                        if (isFlightConduitFrame(blockstate, pLevel, blockpos1, pPos)) {
                             pPositions.add(blockpos1);
                         }
                     }
                 }
             }
         }
-
         return pPositions.size() >= 16;
+    }
+
+    private static boolean isFlightConduitFrame(BlockState state, LevelReader level, BlockPos pos, BlockPos conduit)
+    {
+        return state.getBlock() == Blocks.WEATHERED_COPPER ||
+                state.getBlock() == Blocks.WAXED_WEATHERED_COPPER ||
+                state.getBlock() == Blocks.OXIDIZED_COPPER ||
+                state.getBlock() == Blocks.WAXED_OXIDIZED_COPPER;
     }
 
     private static void applyEffects(Level pLevel, BlockPos pPos, List<BlockPos> pPositions) {
         int i = pPositions.size();
-        int j = i / 7 * 16;
+        int j = i / 7 * 10;
         int k = pPos.getX();
         int l = pPos.getY();
         int i1 = pPos.getZ();
@@ -171,7 +171,7 @@ public class FlightConduitBlockEntity extends BlockEntity {
         if (!list.isEmpty()) {
             for(Player player : list) {
                 if (pPos.closerThan(player.blockPosition(), (double)j)) {
-                    player.addEffect(new MobEffectInstance(ModEffects.FLIGHT.get(), 260, 0, true, true));
+                    player.addEffect(new MobEffectInstance(ModEffects.FLIGHT.get(), 260, 0, true, false, true));
                 }
             }
 

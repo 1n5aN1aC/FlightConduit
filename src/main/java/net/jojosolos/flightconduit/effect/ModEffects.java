@@ -13,7 +13,7 @@ public class ModEffects {
     public static final DeferredRegister<MobEffect> MOB_EFFECTS
             = DeferredRegister.create(ForgeRegistries.MOB_EFFECTS, FlightConduit.MODID);
 
-    public static final RegistryObject<MobEffect> FLIGHT = MOB_EFFECTS.register("flight",
+    public static final RegistryObject<MobEffect> FLIGHT = MOB_EFFECTS.register("flight_conduit_effect",
             () -> new FlightConduitEffect(MobEffectCategory.BENEFICIAL, 1324151243));
 
     public static void register(IEventBus eventBus) {

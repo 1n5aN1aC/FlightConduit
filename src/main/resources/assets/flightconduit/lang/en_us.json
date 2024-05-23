@@ -1,5 +1,7 @@
 {
   "block.flightconduit.flight_conduit_block":  "Flight Conduit",
 
+  "effect.flightconduit.flight_conduit_effect": "Free Flight",
+
   "creativetab.flight_tab": "Flight Mod"
 }
