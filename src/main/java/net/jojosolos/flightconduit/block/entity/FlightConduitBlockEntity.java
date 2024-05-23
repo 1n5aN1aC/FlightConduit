@@ -30,6 +30,14 @@ import java.util.List;
 import java.util.UUID;
 
 public class FlightConduitBlockEntity extends BlockEntity {
+    private static final int BLOCK_REFRESH_RATE = 2;
+    private static final int EFFECT_DURATION = 13;
+    private static final float ROTATION_SPEED = -0.0375F;
+    private static final int MIN_ACTIVE_SIZE = 16;
+    private static final int MIN_KILL_SIZE = 42;
+    private static final int KILL_RANGE = 8;
+    private static final Block[] VALID_BLOCKS = new Block[]{Blocks.PRISMARINE, Blocks.PRISMARINE_BRICKS, Blocks.SEA_LANTERN, Blocks.DARK_PRISMARINE};
+
     public int tickCount;
     private float activeRotation;
     private boolean isActive;
