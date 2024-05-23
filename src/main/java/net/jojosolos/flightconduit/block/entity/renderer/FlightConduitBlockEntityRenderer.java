@@ -2,6 +2,7 @@ package net.jojosolos.flightconduit.block.entity.renderer;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
+import net.jojosolos.flightconduit.FlightConduit;
 import net.jojosolos.flightconduit.block.entity.FlightConduitBlockEntity;
 import net.jojosolos.flightconduit.block.entity.client.ModModelLayers;
 import net.minecraft.client.Camera;
@@ -23,12 +24,12 @@ import org.joml.Vector3f;
 
 public class FlightConduitBlockEntityRenderer implements BlockEntityRenderer<FlightConduitBlockEntity>{
 
-    public static final Material SHELL_TEXTURE = new Material(TextureAtlas.LOCATION_BLOCKS, new ResourceLocation("entity/flight_conduit/base"));
-    public static final Material ACTIVE_SHELL_TEXTURE = new Material(TextureAtlas.LOCATION_BLOCKS, new ResourceLocation("entity/flight_conduit/cage"));
-    public static final Material WIND_TEXTURE = new Material(TextureAtlas.LOCATION_BLOCKS, new ResourceLocation("entity/flight_conduit/wind"));
-    public static final Material VERTICAL_WIND_TEXTURE = new Material(TextureAtlas.LOCATION_BLOCKS, new ResourceLocation("entity/flight_conduit/wind_vertical"));
-    public static final Material OPEN_EYE_TEXTURE = new Material(TextureAtlas.LOCATION_BLOCKS, new ResourceLocation("entity/flight_conduit/open_eye"));
-    public static final Material CLOSED_EYE_TEXTURE = new Material(TextureAtlas.LOCATION_BLOCKS, new ResourceLocation("entity/flight_conduit/closed_eye"));
+    public static final Material SHELL_TEXTURE = new Material(TextureAtlas.LOCATION_BLOCKS, new ResourceLocation(FlightConduit.MODID, "entity/conduit/flight_base"));
+    public static final Material ACTIVE_SHELL_TEXTURE = new Material(TextureAtlas.LOCATION_BLOCKS, new ResourceLocation(FlightConduit.MODID, "entity/conduit/flight_cage"));
+    public static final Material WIND_TEXTURE = new Material(TextureAtlas.LOCATION_BLOCKS, new ResourceLocation(FlightConduit.MODID, "entity/conduit/flight_wind"));
+    public static final Material VERTICAL_WIND_TEXTURE = new Material(TextureAtlas.LOCATION_BLOCKS, new ResourceLocation(FlightConduit.MODID, "entity/conduit/flight_wind_vertical"));
+    public static final Material OPEN_EYE_TEXTURE = new Material(TextureAtlas.LOCATION_BLOCKS, new ResourceLocation(FlightConduit.MODID, "entity/conduit/flight_open_eye"));
+    public static final Material CLOSED_EYE_TEXTURE = new Material(TextureAtlas.LOCATION_BLOCKS, new ResourceLocation(FlightConduit.MODID, "entity/conduit/flight_closed_eye"));
     private final ModelPart eye;
     private final ModelPart wind;
     private final ModelPart shell;
