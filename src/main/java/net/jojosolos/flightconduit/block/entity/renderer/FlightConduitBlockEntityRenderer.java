@@ -6,7 +6,6 @@ import net.jojosolos.flightconduit.FlightConduit;
 import net.jojosolos.flightconduit.block.entity.FlightConduitBlockEntity;
 import net.jojosolos.flightconduit.block.entity.client.ModModelLayers;
 import net.minecraft.client.Camera;
-import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
@@ -19,9 +18,12 @@ import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.client.resources.model.Material;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import org.joml.Quaternionf;
 import org.joml.Vector3f;
 
+@OnlyIn(Dist.CLIENT)
 public class FlightConduitBlockEntityRenderer implements BlockEntityRenderer<FlightConduitBlockEntity>{
 
     public static final Material SHELL_TEXTURE = new Material(TextureAtlas.LOCATION_BLOCKS, new ResourceLocation(FlightConduit.MODID, "entity/conduit/flight_base"));

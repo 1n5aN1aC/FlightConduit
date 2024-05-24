@@ -16,7 +16,7 @@ public class ModBlockStateProviders extends BlockStateProvider {
 
     @Override
     protected void registerStatesAndModels() {
-        simpleBlockWithItem(ModBlocks.FLIGHT_CONDUIT_BLOCK.get(),
+        simpleBlock(ModBlocks.FLIGHT_CONDUIT_BLOCK.get(),
                 new ModelFile.UncheckedModelFile(modLoc("block/flight_conduit_block")));
     }
 
