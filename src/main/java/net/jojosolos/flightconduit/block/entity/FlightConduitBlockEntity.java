@@ -2,6 +2,7 @@ package net.jojosolos.flightconduit.block.entity;
 
 import com.google.common.collect.Lists;
 import net.jojosolos.flightconduit.effect.ModEffects;
+import net.jojosolos.flightconduit.particle.ModParticles;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
@@ -15,6 +16,7 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.monster.Enemy;
+import net.minecraft.world.entity.monster.Phantom;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
@@ -187,7 +189,7 @@ public class FlightConduitBlockEntity extends BlockEntity {
             pBlockEntity.destroyTargetUUID = null;
         } else if (pBlockEntity.destroyTarget == null) {
             List<LivingEntity> list = pLevel.getEntitiesOfClass(LivingEntity.class, getDestroyRangeAABB(pPos), (p_289511_) -> {
-                return p_289511_ instanceof Enemy && p_289511_.isInWaterOrRain();
+                return p_289511_ instanceof Phantom;
             });
             if (!list.isEmpty()) {
                 pBlockEntity.destroyTarget = list.get(pLevel.random.nextInt(list.size()));
@@ -223,7 +225,7 @@ public class FlightConduitBlockEntity extends BlockEntity {
         int i = pPos.getX();
         int j = pPos.getY();
         int k = pPos.getZ();
-        return (new AABB((double)i, (double)j, (double)k, (double)(i + 1), (double)(j + 1), (double)(k + 1))).inflate(8.0D);
+        return (new AABB((double)i, (double)j, (double)k, (double)(i + 1), (double)(j + 1), (double)(k + 1))).inflate(20.0D);
     }
 
     @Nullable
@@ -246,7 +248,7 @@ public class FlightConduitBlockEntity extends BlockEntity {
                 float f = -0.5F + randomsource.nextFloat() + (float)blockpos1.getX();
                 float f1 = -2.0F + randomsource.nextFloat() + (float)blockpos1.getY();
                 float f2 = -0.5F + randomsource.nextFloat() + (float)blockpos1.getZ();
-                pLevel.addParticle(ParticleTypes.NAUTILUS, vec3.x, vec3.y, vec3.z, (double)f, (double)f1, (double)f2);
+                pLevel.addParticle(ModParticles.FLIGHT_CONDUIT_PARTICLE.get(), vec3.x, vec3.y, vec3.z, (double)f, (double)f1, (double)f2);
             }
         }
 
@@ -256,7 +258,7 @@ public class FlightConduitBlockEntity extends BlockEntity {
             float f4 = -1.0F + randomsource.nextFloat() * pEntity.getBbHeight();
             float f5 = (-0.5F + randomsource.nextFloat()) * (3.0F + pEntity.getBbWidth());
             Vec3 vec32 = new Vec3((double)f3, (double)f4, (double)f5);
-            pLevel.addParticle(ParticleTypes.NAUTILUS, vec31.x, vec31.y, vec31.z, vec32.x, vec32.y, vec32.z);
+            pLevel.addParticle(ModParticles.FLIGHT_CONDUIT_PARTICLE.get(), vec31.x, vec31.y, vec31.z, vec32.x, vec32.y, vec32.z);
         }
 
     }
