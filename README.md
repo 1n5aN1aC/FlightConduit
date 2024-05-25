@@ -1,7 +1,7 @@
 # Flight Conduit mod
 by jojosolos, with the help of Noppes.
 
-![Image of the Conduit](https://imgur.com/a/ihKhLRi)
+![Image of the Conduit](https://i.imgur.com/2DPjt23.png)
 
 ## What is this
 This mod adds a new type of conduit that grants new (and probably better) benefits, for those who like to build outside of water.
