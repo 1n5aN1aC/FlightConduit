@@ -1,6 +1,7 @@
 package net.jojosolos.flightconduit.block.entity;
 
 import com.google.common.collect.Lists;
+import net.jojosolos.flightconduit.Config;
 import net.jojosolos.flightconduit.effect.ModEffects;
 import net.jojosolos.flightconduit.particle.ModParticles;
 import net.minecraft.core.BlockPos;
@@ -20,6 +21,7 @@ import net.minecraft.world.entity.monster.Phantom;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
@@ -155,10 +157,16 @@ public class FlightConduitBlockEntity extends BlockEntity {
 
     private static boolean isFlightConduitFrame(BlockState state, LevelReader level, BlockPos pos, BlockPos conduit)
     {
-        return state.getBlock() == Blocks.WEATHERED_COPPER ||
-                state.getBlock() == Blocks.WAXED_WEATHERED_COPPER ||
-                state.getBlock() == Blocks.OXIDIZED_COPPER ||
-                state.getBlock() == Blocks.WAXED_OXIDIZED_COPPER;
+        for (Block block : Config.blocks) {
+            if(state.getBlock() == block) {
+                return true;
+            }
+        }
+//        return state.getBlock() == Blocks.WEATHERED_COPPER ||
+//                state.getBlock() == Blocks.WAXED_WEATHERED_COPPER ||
+//                state.getBlock() == Blocks.OXIDIZED_COPPER ||
+//                state.getBlock() == Blocks.WAXED_OXIDIZED_COPPER;
+        return false;
     }
 
     private static void applyEffects(Level pLevel, BlockPos pPos, List<BlockPos> pPositions) {
