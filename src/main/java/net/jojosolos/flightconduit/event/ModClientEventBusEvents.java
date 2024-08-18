@@ -7,11 +7,19 @@ import net.jojosolos.flightconduit.block.entity.renderer.FlightConduitBlockEntit
 import net.jojosolos.flightconduit.particle.ModParticles;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.EnchantmentTableParticle;
+import net.minecraft.client.resources.model.Material;
+import net.minecraft.client.resources.model.ModelBakery;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.EntityRenderersEvent;
+import net.minecraftforge.client.event.ModelEvent;
 import net.minecraftforge.client.event.RegisterParticleProvidersEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+
+import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
+import java.util.Set;
 
 @Mod.EventBusSubscriber(modid = FlightConduit.MODID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 public class ModClientEventBusEvents {
@@ -33,6 +41,26 @@ public class ModClientEventBusEvents {
     public static void registerParticles(final RegisterParticleProvidersEvent event) {
         Minecraft.getInstance().particleEngine.register(ModParticles.FLIGHT_CONDUIT_PARTICLE.get(),
                 EnchantmentTableParticle.NautilusProvider::new);
+    }
+
+    @SubscribeEvent
+    public static void modelEvent(ModelEvent.RegisterAdditional event){
+        for(Field f : ModelBakery.class.getDeclaredFields()){
+            if(Modifier.isStatic(f.getModifiers()) && f.getType() == Set.class){
+                try {
+                    f.setAccessible(true);
+                    Set<Material> ob = (Set<Material>) f.get(null);
+                    ob.add(FlightConduitBlockEntityRenderer.SHELL_TEXTURE);
+                    ob.add(FlightConduitBlockEntityRenderer.WIND_TEXTURE);
+                    ob.add(FlightConduitBlockEntityRenderer.ACTIVE_SHELL_TEXTURE);
+                    ob.add(FlightConduitBlockEntityRenderer.CLOSED_EYE_TEXTURE);
+                    ob.add(FlightConduitBlockEntityRenderer.OPEN_EYE_TEXTURE);
+                    ob.add(FlightConduitBlockEntityRenderer.VERTICAL_WIND_TEXTURE);
+                } catch (IllegalAccessException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }
     }
 
 }
