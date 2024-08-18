@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "zxz",
+    "xax",
+    "zxz"
+  ],
+  "key": {
+    "z": {
+      "item": "minecraft:feather"
+    },
+    "x": {
+      "item": "minecraft:echo_shard"
+    },
+    "a": {
+      "item": "minecraft:lodestone"
+    }
+  },
+  "result": {
+    "item": "flightconduit:flight_conduit_block"
+  }
+}

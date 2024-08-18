@@ -13,6 +13,7 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
@@ -208,7 +209,7 @@ public class FlightConduitBlockEntity extends BlockEntity {
 
         if (pBlockEntity.destroyTarget != null) {
             pLevel.playSound((Player)null, pBlockEntity.destroyTarget.getX(), pBlockEntity.destroyTarget.getY(), pBlockEntity.destroyTarget.getZ(), SoundEvents.CONDUIT_ATTACK_TARGET, SoundSource.BLOCKS, 1.0F, 1.0F);
-            pBlockEntity.destroyTarget.hurt(pLevel.damageSources().magic(), 4.0F);
+            pBlockEntity.destroyTarget.hurt(DamageSource.MAGIC, 4.0F);
         }
 
         if (livingentity != pBlockEntity.destroyTarget) {

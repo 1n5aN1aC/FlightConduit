@@ -2,6 +2,7 @@ package net.jojosolos.flightconduit.block;
 
 import net.jojosolos.flightconduit.FlightConduit;
 import net.jojosolos.flightconduit.block.custom.FlightConduitBlock;
+import net.jojosolos.flightconduit.item.ModCreativeModeTabs;
 import net.jojosolos.flightconduit.item.ModItems;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
@@ -31,7 +32,7 @@ public class ModBlocks {
     }
 
     private static <T extends Block> RegistryObject<Item> registerBlockItem(String name, RegistryObject<T> block) {
-        return ModItems.ITEMS.register(name, () -> new BlockItem(block.get(), new Item.Properties()));
+        return ModItems.ITEMS.register(name, () -> new BlockItem(block.get(), new Item.Properties().tab(ModCreativeModeTabs.FC_TAB)));
     }
 
     public static void register(IEventBus eventBus) {

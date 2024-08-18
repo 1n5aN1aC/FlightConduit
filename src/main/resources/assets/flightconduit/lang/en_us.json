@@ -3,5 +3,5 @@
 
   "effect.flightconduit.flight_conduit_effect": "Free Flight",
 
-  "creativetab.flight_tab": "Flight Mod"
+  "itemGroup.flightconduit": "Flight Mod"
 }

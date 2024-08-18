@@ -2,6 +2,7 @@ package net.jojosolos.flightconduit.block.entity.renderer;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
+import com.mojang.math.Vector3f;
 import net.jojosolos.flightconduit.FlightConduit;
 import net.jojosolos.flightconduit.block.entity.FlightConduitBlockEntity;
 import net.jojosolos.flightconduit.block.entity.client.ModModelLayers;
@@ -20,8 +21,6 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import org.joml.Quaternionf;
-import org.joml.Vector3f;
 
 @OnlyIn(Dist.CLIENT)
 public class FlightConduitBlockEntityRenderer implements BlockEntityRenderer<FlightConduitBlockEntity>{
@@ -82,7 +81,7 @@ public class FlightConduitBlockEntityRenderer implements BlockEntityRenderer<Fli
             VertexConsumer vertexconsumer1 = SHELL_TEXTURE.buffer(pBuffer, RenderType::entitySolid);
             pPoseStack.pushPose();
             pPoseStack.translate(0.5F, 0.5F, 0.5F);
-            pPoseStack.mulPose((new Quaternionf()).rotationY(f5 * ((float)Math.PI / 180F)));
+            pPoseStack.mulPose(Vector3f.YP.rotationDegrees(f5));
             this.shell.render(pPoseStack, vertexconsumer1, pPackedLight, pPackedOverlay);
             pPoseStack.popPose();
         } else {
@@ -91,17 +90,18 @@ public class FlightConduitBlockEntityRenderer implements BlockEntityRenderer<Fli
             f2 = f2 * f2 + f2;
             pPoseStack.pushPose();
             pPoseStack.translate(0.5F, 0.3F + f2 * 0.2F, 0.5F);
-            Vector3f vector3f = (new Vector3f(0.5F, 1.0F, 0.5F)).normalize();
-            pPoseStack.mulPose((new Quaternionf()).rotationAxis(f1 * ((float)Math.PI / 180F), vector3f));
+            Vector3f $$11 = new Vector3f(0.5F, 1.0F, 0.5F);
+            $$11.normalize();
+            pPoseStack.mulPose($$11.rotationDegrees(f1));
             this.cage.render(pPoseStack, ACTIVE_SHELL_TEXTURE.buffer(pBuffer, RenderType::entityCutoutNoCull), pPackedLight, pPackedOverlay);
             pPoseStack.popPose();
             int i = pBlockEntity.tickCount / 66 % 3;
             pPoseStack.pushPose();
             pPoseStack.translate(0.5F, 0.5F, 0.5F);
             if (i == 1) {
-                pPoseStack.mulPose((new Quaternionf()).rotationX(((float)Math.PI / 2F)));
+                pPoseStack.mulPose(Vector3f.XP.rotationDegrees(90.0F));
             } else if (i == 2) {
-                pPoseStack.mulPose((new Quaternionf()).rotationZ(((float)Math.PI / 2F)));
+                pPoseStack.mulPose(Vector3f.ZP.rotationDegrees(90.0F));
             }
 
             VertexConsumer vertexconsumer = (i == 1 ? VERTICAL_WIND_TEXTURE : WIND_TEXTURE).buffer(pBuffer, RenderType::entityCutoutNoCull);
@@ -110,7 +110,8 @@ public class FlightConduitBlockEntityRenderer implements BlockEntityRenderer<Fli
             pPoseStack.pushPose();
             pPoseStack.translate(0.5F, 0.5F, 0.5F);
             pPoseStack.scale(0.875F, 0.875F, 0.875F);
-            pPoseStack.mulPose((new Quaternionf()).rotationXYZ((float)Math.PI, 0.0F, (float)Math.PI));
+            pPoseStack.mulPose(Vector3f.XP.rotationDegrees(180.0F));
+            pPoseStack.mulPose(Vector3f.ZP.rotationDegrees(180.0F));
             this.wind.render(pPoseStack, vertexconsumer, pPackedLight, pPackedOverlay);
             pPoseStack.popPose();
             Camera camera = this.renderer.camera;
@@ -118,7 +119,9 @@ public class FlightConduitBlockEntityRenderer implements BlockEntityRenderer<Fli
             pPoseStack.translate(0.5F, 0.3F + f2 * 0.2F, 0.5F);
             pPoseStack.scale(0.5F, 0.5F, 0.5F);
             float f3 = -camera.getYRot();
-            pPoseStack.mulPose((new Quaternionf()).rotationYXZ(f3 * ((float)Math.PI / 180F), camera.getXRot() * ((float)Math.PI / 180F), (float)Math.PI));
+            pPoseStack.mulPose(Vector3f.YP.rotationDegrees(f3));
+            pPoseStack.mulPose(Vector3f.XP.rotationDegrees(camera.getXRot()));
+            pPoseStack.mulPose(Vector3f.ZP.rotationDegrees(180.0F));
             float f4 = 1.3333334F;
             pPoseStack.scale(1.3333334F, 1.3333334F, 1.3333334F);
             this.eye.render(pPoseStack, (pBlockEntity.isHunting() ? OPEN_EYE_TEXTURE : CLOSED_EYE_TEXTURE).buffer(pBuffer, RenderType::entityCutoutNoCull), pPackedLight, pPackedOverlay);

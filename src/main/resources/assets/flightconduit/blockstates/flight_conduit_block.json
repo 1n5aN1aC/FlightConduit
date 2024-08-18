@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "flightconduit:block/flight_conduit_block"
+    }
+  }
+}

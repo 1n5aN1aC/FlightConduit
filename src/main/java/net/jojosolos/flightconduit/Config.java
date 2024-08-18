@@ -9,6 +9,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.config.ModConfigEvent;
 import net.minecraftforge.registries.ForgeRegistries;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -22,8 +23,8 @@ public class Config
 
     private static final ForgeConfigSpec.ConfigValue<List<? extends String>> BLOCK_STRINGS = BUILDER
             .comment("Flight Conduit Mod Config - select blocks allowed for Conduit Structure\n\nAllowed blocks for structure around the flight conduit")
-            .defineListAllowEmpty("blocks",
-                    List.of("minecraft:oxidized_copper", "minecraft:waxed_oxidized_copper", "minecraft:weathered_copper", "minecraft:waxed_weathered_copper"),
+            .defineListAllowEmpty(Collections.singletonList("blocks"),
+                    () -> List.of("minecraft:oxidized_copper", "minecraft:waxed_oxidized_copper", "minecraft:weathered_copper", "minecraft:waxed_weathered_copper"),
                     Config::validateBlockName);
 
     static final ForgeConfigSpec SPEC = BUILDER.build();
