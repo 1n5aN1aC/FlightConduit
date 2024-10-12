@@ -12,8 +12,7 @@ public class FlightConduitEffect extends MobEffect {
 
     @Override
     public void applyEffectTick(LivingEntity pLivingEntity, int pAmplifier) {
-        if(!pLivingEntity.level.isClientSide()) {
-            Player player = (Player) pLivingEntity;
+        if(!pLivingEntity.level.isClientSide() && pLivingEntity instanceof Player player) {
             player.getAbilities().mayfly = true;
             player.onUpdateAbilities();
         }
