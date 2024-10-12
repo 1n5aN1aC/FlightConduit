@@ -18,8 +18,7 @@ public class ModEvents {
 
     @SubscribeEvent
     public static void onFlightConduitEffectEnds(MobEffectEvent.Expired event) {
-        Player player = (Player) event.getEntity();
-        if (!player.isCreative() && !player.isSpectator()
+        if (event.getEntity() instanceof Player player && !player.isCreative() && !player.isSpectator()
                 && event.getEffectInstance().getEffect() == ModEffects.FLIGHT.get()) {
             player.getAbilities().mayfly = false;
             player.getAbilities().flying = false;
