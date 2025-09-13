@@ -26,9 +26,14 @@ public class Config
                     List.of("minecraft:oxidized_copper", "minecraft:waxed_oxidized_copper", "minecraft:weathered_copper", "minecraft:waxed_weathered_copper"),
                     Config::validateBlockName);
 
+    private static final ForgeConfigSpec.DoubleValue RANGE_MULTIPLIER = BUILDER
+            .comment("Flight effect range multiplier\n\nMultiplies the default range calculation (frame_blocks / 7 * 10)\nDefault: 1.0, Range: 0.05 to 100.0")
+            .defineInRange("rangeMultiplier", 1.0, 0.05, 100.0);
+
     static final ForgeConfigSpec SPEC = BUILDER.build();
 
     public static Set<Block> blocks;
+    public static double rangeMultiplier;
 
     private static boolean validateBlockName(final Object obj)
     {
@@ -41,5 +46,7 @@ public class Config
         blocks = BLOCK_STRINGS.get().stream()
                 .map(blockName -> ForgeRegistries.BLOCKS.getValue(new ResourceLocation(blockName)))
                 .collect(Collectors.toSet());
+        
+        rangeMultiplier = RANGE_MULTIPLIER.get();
     }
 }

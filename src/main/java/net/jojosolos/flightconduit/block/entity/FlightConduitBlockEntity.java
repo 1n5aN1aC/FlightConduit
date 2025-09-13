@@ -171,7 +171,7 @@ public class FlightConduitBlockEntity extends BlockEntity {
 
     private static void applyEffects(Level pLevel, BlockPos pPos, List<BlockPos> pPositions) {
         int i = pPositions.size();
-        int j = i / 7 * 10;
+        int j = (int) (i / 7 * 10 * Config.rangeMultiplier);
         int k = pPos.getX();
         int l = pPos.getY();
         int i1 = pPos.getZ();
