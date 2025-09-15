@@ -27,8 +27,8 @@ public class Config
                     Config::validateBlockName);
 
     private static final ForgeConfigSpec.DoubleValue RANGE_MULTIPLIER = BUILDER
-            .comment("Flight effect range multiplier\n\nMultiplies the default range calculation (frame_blocks / 7 * 10)\nDefault: 1.0, Range: 0.05 to 100.0")
-            .defineInRange("rangeMultiplier", 1.0, 0.05, 100.0);
+            .comment("Flight effect range multiplier\n\nMultiplies the default range calculation (frame_blocks / 7 * 10)\nDefault: 1.0, Range: 0.05 to 10.0")
+            .defineInRange("rangeMultiplier", 1.0, 0.05, 10.0);
 
     static final ForgeConfigSpec SPEC = BUILDER.build();
 
