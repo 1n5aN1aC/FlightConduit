@@ -30,10 +30,15 @@ public class Config
             .comment("Flight effect range multiplier\n\nMultiplies the default range calculation (frame_blocks / 7 * 10)\nDefault: 1.0, Range: 0.05 to 10.0")
             .defineInRange("rangeMultiplier", 1.0, 0.05, 10.0);
 
+    private static final ForgeConfigSpec.IntValue FEATHER_FALLING_DURATION = BUILDER
+            .comment("Feather falling (slow falling) effect duration in ticks\n\nApplied when exiting the flight conduit range\nDefault: 300 ticks (15 seconds), Range: 0 to 1200 ticks (60 seconds)")
+            .defineInRange("featherFallingDuration", 300, 0, 1200);
+
     static final ForgeConfigSpec SPEC = BUILDER.build();
 
     public static Set<Block> blocks;
     public static double rangeMultiplier;
+    public static int featherFallingDuration;
 
     private static boolean validateBlockName(final Object obj)
     {
@@ -48,5 +53,6 @@ public class Config
                 .collect(Collectors.toSet());
         
         rangeMultiplier = RANGE_MULTIPLIER.get();
+        featherFallingDuration = FEATHER_FALLING_DURATION.get();
     }
 }

@@ -1,5 +1,6 @@
 package net.jojosolos.flightconduit.event;
 
+import net.jojosolos.flightconduit.Config;
 import net.jojosolos.flightconduit.FlightConduit;
 import net.jojosolos.flightconduit.effect.ModEffects;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -24,7 +25,7 @@ public class ModEvents {
             player.getAbilities().flying = false;
             player.onUpdateAbilities();
 
-            player.addEffect(new MobEffectInstance(MobEffects.SLOW_FALLING, 300, 1));
+            player.addEffect(new MobEffectInstance(MobEffects.SLOW_FALLING, Config.featherFallingDuration, 1));
         }
     }
 }
