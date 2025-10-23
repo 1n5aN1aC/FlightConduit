@@ -3,9 +3,11 @@ package net.jojosolos.flightconduit.event;
 import net.jojosolos.flightconduit.Config;
 import net.jojosolos.flightconduit.FlightConduit;
 import net.jojosolos.flightconduit.effect.ModEffects;
+import net.minecraft.core.BlockPos;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.event.entity.living.MobEffectEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -25,7 +27,43 @@ public class ModEvents {
             player.getAbilities().flying = false;
             player.onUpdateAbilities();
 
-            player.addEffect(new MobEffectInstance(MobEffects.SLOW_FALLING, Config.featherFallingDuration, 1));
+            // Check if we should apply feather falling
+            boolean shouldApplyFeatherFalling = true;
+            
+            if (Config.featherFallingNearGround) {
+                // Check distance to ground
+                double distanceToGround = getDistanceToGround(player);
+                if (distanceToGround <= Config.featherFallingNearGroundBlocks) {
+                    shouldApplyFeatherFalling = false;
+                }
+            }
+            
+            if (shouldApplyFeatherFalling) {
+                player.addEffect(new MobEffectInstance(MobEffects.SLOW_FALLING, Config.featherFallingDuration, 1));
+            }
         }
+    }
+
+    private static double getDistanceToGround(Player player) {
+        Level level = player.level();
+        BlockPos playerPos = player.blockPosition();
+        
+        // Search downward from player position to find the first solid block
+        for (int i = 0; i < Config.featherFallingNearGroundBlocks + 10; i++) {
+            BlockPos checkPos = playerPos.below(i);
+            
+            // Check if we've reached the bottom of the world
+            if (checkPos.getY() < level.getMinBuildHeight()) {
+                return playerPos.getY() - level.getMinBuildHeight();
+            }
+            
+            // Check if this block is solid (ground)
+            if (!level.getBlockState(checkPos).isAir() && level.getBlockState(checkPos).isSolidRender(level, checkPos)) {
+                return i;
+            }
+        }
+        
+        // If no ground found within search range, return a large number
+        return Config.featherFallingNearGroundBlocks + 1;
     }
 }
