@@ -28,10 +28,9 @@ public class ModEvents {
             player.onUpdateAbilities();
 
             // Check if we should apply feather falling
+            // If featherFallingApplyNearGround, we don't need to check distance always apply no matter what
             boolean shouldApplyFeatherFalling = true;
-            
-            if (Config.featherFallingNearGround) {
-                // Check distance to ground
+            if (!Config.featherFallingApplyNearGround) {
                 double distanceToGround = getDistanceToGround(player);
                 if (distanceToGround <= Config.featherFallingNearGroundBlocks) {
                     shouldApplyFeatherFalling = false;
@@ -49,7 +48,9 @@ public class ModEvents {
         BlockPos playerPos = player.blockPosition();
         
         // Search downward from player position to find the first solid block
-        for (int i = 0; i < Config.featherFallingNearGroundBlocks + 10; i++) {
+        // Search twice the configured distance to ensure we can accurately determine if player is within range
+        int searchDistance = Config.featherFallingNearGroundBlocks + 10;
+        for (int i = 0; i < searchDistance; i++) {
             BlockPos checkPos = playerPos.below(i);
             
             // Check if we've reached the bottom of the world
@@ -63,7 +64,7 @@ public class ModEvents {
             }
         }
         
-        // If no ground found within search range, return a large number
-        return Config.featherFallingNearGroundBlocks + 1;
+        // If no ground found within search range, return a distance larger than our check range
+        return searchDistance + 10;
     }
 }

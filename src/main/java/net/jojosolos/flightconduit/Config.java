@@ -1,7 +1,6 @@
 package net.jojosolos.flightconduit;
 
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -34,12 +33,12 @@ public class Config
             .comment("Feather falling (slow falling) effect duration in ticks\n\nApplied when exiting the flight conduit range\nDefault: 300 ticks (15 seconds), Range: 0 to 1200 ticks (60 seconds)")
             .defineInRange("featherFallingDuration", 300, 0, 1200);
 
-    private static final ForgeConfigSpec.BooleanValue FEATHER_FALLING_NEAR_GROUND = BUILDER
-            .comment("Disable feather falling when near ground\n\nWhen enabled, feather falling will not be applied if the player is within a certain distance of the ground\nDefault: false")
-            .define("featherFallingNearGround", false);
+    private static final ForgeConfigSpec.BooleanValue FEATHER_FALLING_APPLY_NEAR_GROUND = BUILDER
+            .comment("Should feather falling still apply when near ground?")
+            .define("featherFallingApplyNearGround", true);
 
     private static final ForgeConfigSpec.IntValue FEATHER_FALLING_NEAR_GROUND_BLOCKS = BUILDER
-            .comment("Distance from ground to disable feather falling\n\nOnly applies if featherFallingNearGround is enabled\nDefault: 5 blocks, Range: 1 to 20 blocks")
+            .comment("Distance from ground to disable feather falling\n\nOnly applies if featherFallingApplyNearGround is disabled\nDefault: 5 blocks, Range: 1 to 100 blocks")
             .defineInRange("featherFallingNearGroundBlocks", 5, 1, 100);
 
     static final ForgeConfigSpec SPEC = BUILDER.build();
@@ -47,7 +46,7 @@ public class Config
     public static Set<Block> blocks;
     public static double rangeMultiplier;
     public static int featherFallingDuration;
-    public static boolean featherFallingNearGround;
+    public static boolean featherFallingApplyNearGround;
     public static int featherFallingNearGroundBlocks;
 
     private static boolean validateBlockName(final Object obj)
@@ -64,7 +63,7 @@ public class Config
         
         rangeMultiplier = RANGE_MULTIPLIER.get();
         featherFallingDuration = FEATHER_FALLING_DURATION.get();
-        featherFallingNearGround = FEATHER_FALLING_NEAR_GROUND.get();
+        featherFallingApplyNearGround = FEATHER_FALLING_APPLY_NEAR_GROUND.get();
         featherFallingNearGroundBlocks = FEATHER_FALLING_NEAR_GROUND_BLOCKS.get();
     }
 }
