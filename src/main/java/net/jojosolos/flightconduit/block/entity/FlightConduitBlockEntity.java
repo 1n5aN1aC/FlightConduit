@@ -100,7 +100,7 @@ public class FlightConduitBlockEntity extends BlockEntity {
         ++pBlockEntity.tickCount;
         long i = pLevel.getGameTime();
         List<BlockPos> list = pBlockEntity.effectBlocks;
-        if (i % 40L == 0L) {
+        if (i % Config.flightCheckInterval == 0L) {
             boolean flag = updateShape(pLevel, pPos, list);
             if (flag != pBlockEntity.isActive) {
                 SoundEvent soundevent = flag ? SoundEvents.CONDUIT_ACTIVATE : SoundEvents.CONDUIT_DEACTIVATE;
@@ -180,7 +180,7 @@ public class FlightConduitBlockEntity extends BlockEntity {
         if (!list.isEmpty()) {
             for(Player player : list) {
                 if (pPos.closerThan(player.blockPosition(), (double)j)) {
-                    player.addEffect(new MobEffectInstance(ModEffects.FLIGHT.get(), 260, 0, true, false, true));
+                    player.addEffect(new MobEffectInstance(ModEffects.FLIGHT.get(), Config.flightEffectDuration, 0, true, false, true));
                 }
             }
 
