@@ -49,6 +49,10 @@ public class Config
             .comment("Distance from ground to disable feather falling\n\nOnly applies if featherFallingApplyNearGround is disabled\nDefault: 5 blocks, Range: 1 to 100 blocks")
             .defineInRange("featherFallingNearGroundBlocks", 5, 1, 100);
 
+    private static final ForgeConfigSpec.BooleanValue FEATHER_FALLING_DYNAMIC_DURATION = BUILDER
+            .comment("Calculate feather falling duration dynamically based on height above ground\n\nWhen enabled, applies exactly enough slow falling to safely reach the ground\nWhen disabled, uses the fixed featherFallingDuration value\nDefault: false")
+            .define("featherFallingDynamicDuration", false);
+
     static final ForgeConfigSpec SPEC = BUILDER.build();
 
     public static Set<Block> blocks;
@@ -58,6 +62,7 @@ public class Config
     public static int featherFallingDuration;
     public static boolean featherFallingApplyNearGround;
     public static int featherFallingNearGroundBlocks;
+    public static boolean featherFallingDynamicDuration;
 
     private static boolean validateBlockName(final Object obj)
     {
@@ -77,5 +82,6 @@ public class Config
         featherFallingDuration = FEATHER_FALLING_DURATION.get();
         featherFallingApplyNearGround = FEATHER_FALLING_APPLY_NEAR_GROUND.get();
         featherFallingNearGroundBlocks = FEATHER_FALLING_NEAR_GROUND_BLOCKS.get();
+        featherFallingDynamicDuration = FEATHER_FALLING_DYNAMIC_DURATION.get();
     }
 }
